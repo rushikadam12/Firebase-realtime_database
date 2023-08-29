@@ -22,19 +22,19 @@ function App() {
         console.log(realDB)*/
        
    //   })
-      await get(child(ref(db),"Programming in java/")).then(async(snapshot)=>{
+      const snapshot= await get(child(ref(db),"Programming in java/Theory assignments"))
         const data= snapshot.val();
         const keys=Object.keys(data);
-        console.log(keys);
+        
+        const newDataArrya=[];
         for(let i=0;i<keys.length;i++){
           let k=keys[i];
-          //console.log(data[k]);
-          setrealDB(data[k])
-          console.log(realDB)
+          newDataArrya.push(data[k]);
         }
-
+        setrealDB(newDataArrya);
+        console.log(realDB)
       
-      })
+      
       
     /* issuesRef(on("value", function(snapshot) {
         snapshot.forEach(snap => {
@@ -81,15 +81,16 @@ function App() {
   
   const putDB = async () => {
     /*here we using 'methods' 'headers' to create unique ID while storing data 'body' use to specify the data which will store into the Realtime database*/
-    const rep = await fetch('https://fireabase-auth-1ae6a-default-rtdb.firebaseio.com/Programming in java.json', {
+    const rep = await fetch('https://fireabase-auth-1ae6a-default-rtdb.firebaseio.com/Programming in java/Theory assignments.json', {
       method: "POST",/*methods declaring Postman method  */
       headers: {
         "Content-Type": "application.json",/*For specifying content type so here we use application.json */
       },
       body: JSON.stringify({
         name,
-        email,
-        url: "https://c4.wallpaperflare.com/wallpaper/106/910/391/ichigo-bankai-ichigo-kurosaki-wallpaper-preview.jpg"
+        desc:email,
+        date:'20-08-2023',
+        url: "https://firebasestorage.googleapis.com/v0/b/fireabase-auth-1ae6a.appspot.com/o/assignMate%2Ftechnical-specifications-dlts-ver-2.3.pdf?alt=media&token=018f6a4e-219d-46f5-be4b-d4402bb51c14"
       })
     });
 
@@ -111,18 +112,21 @@ function App() {
             setname("")
         }}>Submit</button>
         {
-         /* realDB.map((item) => {
+         realDB.map((item) => {
             return (
               <>
-              <div>
-                <h1>{item.email}</h1>
-                <h2>{item.name}</h2>
-                <div><img src={item.url} alt='image_'/></div>
+              <div style={{display:'flex',fontSize:'50px',alignItems:'center',flexDirection:'column'}}>
+                <p>{item.desc}</p>
+                <p>{item.name}</p>
+                <div>
+                  <a href={item.url} target='blank'>
+                  <button>Open_URL</button>
+                    </a></div>
                 </div>
               </>
             )
-          })*/
-        }
+            })
+          }
       </div>
     </>
   )
