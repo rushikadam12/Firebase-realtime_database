@@ -6,23 +6,34 @@ function App() {
   const [name, setname] = useState();
   const [email, setemail] = useState();
   const [realDB, setrealDB] = useState([]);
-  const storageRef = ref(db, 'Programming in java/');
+  const storageRef = ref(db, 'Programming in java');
   //var ref = db.ref("Programming in java/");
   const issuesRef =ref(db,'Programming in java');
 
   const ReadDB = async () => {
  
-   /* await onValue(ref(db,"Programming in java/"),(snapshot) => {
+  /* await onValue(ref(db,"Programming in java/"),(snapshot) => {
         const data=snapshot.val()
-        setrealDB(data);
-        console.log(realDB)
+        /*const keys=Object.key(data);
+        console.log(keys)
+        /*for(let i=0;i<keys.length;i++){
+          let k=keys[i];
+        }
+        console.log(realDB)*/
        
-      })*/
-      get(child(ref(db),"Programming in java")).then((snapshot)=>{
-        const data=snapshot.val()
-        console.log(data)
-        setrealDB(snapshot.val())
-        console.log(realDB)
+   //   })
+      await get(child(ref(db),"Programming in java/")).then(async(snapshot)=>{
+        const data= snapshot.val();
+        const keys=Object.keys(data);
+        console.log(keys);
+        for(let i=0;i<keys.length;i++){
+          let k=keys[i];
+          //console.log(data[k]);
+          setrealDB(data[k])
+          console.log(realDB)
+        }
+
+      
       })
       
     /* issuesRef(on("value", function(snapshot) {
@@ -46,12 +57,24 @@ function App() {
         });
       })*/
 
-      }
+     
       /*ref.on("value", function(snapshot) {
         console.log(snapshot.val());
      }, function (error) {
         console.log("Error: " + error.code);
      });*/
+
+
+     /*const StrRef=ref(db,'Programming in java');
+     on(StrRef,'value',(data)=>{
+        const dbs=data.val();
+        let keys=Object.keys(dbs);
+        console.log(keys)
+     })*/
+
+
+
+      }
     
       
    
